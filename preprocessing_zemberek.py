@@ -24,11 +24,30 @@ morphology = TurkishMorphology.createWithDefaults()
 # Ön temizlik
 def clean_text(text):
     text = str(text)
+
+    # 1. bkz yapıları temizle
+    text = re.sub(r"\(bkz:[^)]+\)", "", text)
+    text = re.sub(r"\bbkz\b:?", "", text, flags=re.IGNORECASE)
+
+    # 2. linkleri temizle
     text = re.sub(r"http\S+", "", text)
+
+    # 3. tırnak içinde boş entry'leri temizle
+    text = re.sub(r'^""$', '', text.strip())
+    text = re.sub(r'^\'\'$', '', text.strip())
+
+    # 4. noktalama & özel karakter temizliği
     text = re.sub(r"[^\w\sçğıöşüÇĞİÖŞÜ]", "", text)
+    
+    # 5. sayıları temizle
     text = re.sub(r"\d+", "", text)
+
+    # 6. çoklu boşlukları azalt
     text = re.sub(r"\s+", " ", text)
+
+    # 7. Küçük harfe çevir
     return text.lower().strip()
+
 
 # Kök bulma (UNK-savar)
 def get_roots(text):
