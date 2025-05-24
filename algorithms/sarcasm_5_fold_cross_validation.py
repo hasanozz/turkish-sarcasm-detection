@@ -1,0 +1,67 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import cross_val_score
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, ExtraTreesClassifier
+from sklearn.svm import SVC
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import StratifiedKFold
+import seaborn as sns
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
+
+
+df = pd.read_csv("csv_data/tfidf_dataset.csv")
+X = df.drop(columns=["label"])
+y = LabelEncoder().fit_transform(df["label"])
+
+
+models = {
+    "Naive Bayes": MultinomialNB(),
+    "Logistic Regression": LogisticRegression(max_iter=1000),
+    "Decision Tree (J48)": DecisionTreeClassifier(),
+    "Random Forest": RandomForestClassifier(),
+    "AdaBoostM1": AdaBoostClassifier(),
+    "SVM": SVC(),
+    "Extra Trees": ExtraTreesClassifier(n_estimators=50, max_depth=5)
+}
+
+
+scoring = {
+    "Accuracy": make_scorer(accuracy_score),
+    "Precision": make_scorer(precision_score),
+    "Recall": make_scorer(recall_score),
+    "F1-Score": make_scorer(f1_score)
+}
+
+
+results = []
+
+kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+for name, model in models.items():
+    row = {"Model": name}
+    for metric_name, scorer in scoring.items():
+        scores = cross_val_score(model, X, y, cv=kf, scoring=scorer)
+        row[metric_name] = np.mean(scores)
+    results.append(row)
+
+
+results_df = pd.DataFrame(results)
+print(results_df.sort_values(by="Accuracy", ascending=False))
+
+
+melted = results_df.melt(id_vars="Model", var_name="Metric", value_name="Score")
+
+plt.figure(figsize=(12, 6))
+sns.barplot(data=melted, x="Model", y="Score", hue="Metric")
+plt.title("5-Fold Cross-Validation Sonuçları")
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+plt.savefig("results/5_fold_cross_validation.png", dpi=300, bbox_inches='tight')
+plt.show()
