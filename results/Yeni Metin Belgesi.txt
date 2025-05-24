@@ -1,0 +1,43 @@
+100 training
+                 Model  Accuracy  Precision    Recall  F1-Score
+2  Decision Tree (J48)  0.996366   1.000000  0.992604  0.996288
+3        Random Forest  0.996366   0.998218  0.994379  0.996295
+5                  SVM  0.986192   0.985803  0.986095  0.985949
+1  Logistic Regression  0.938663   0.938612  0.936391  0.937500
+0          Naive Bayes  0.915407   0.905038  0.924852  0.914838
+6          Extra Trees  0.792442   0.934164  0.621302  0.746269
+4           AdaBoostM1  0.709738   0.904623  0.457396  0.607585
+
+
+
+70/30
+                 Model  Accuracy  Precision    Recall  F1-Score
+0          Naive Bayes  0.889535   0.886051  0.889546  0.887795
+1  Logistic Regression  0.893411   0.900202  0.880671  0.890329
+2  Decision Tree (J48)  0.844477   0.853211  0.825444  0.839098
+3        Random Forest  0.875484   0.894682  0.846154  0.869742
+4           AdaBoostM1  0.698643   0.884314  0.444773  0.591864
+5                  SVM  0.900678   0.898522  0.899408  0.898965
+6          Extra Trees  0.795543   0.871859  0.684418  0.766851
+
+5fold
+                 Model  Accuracy  Precision    Recall  F1-Score
+5                  SVM  0.912209   0.906607  0.915680  0.911080
+1  Logistic Regression  0.906977   0.905411  0.905325  0.905324
+0          Naive Bayes  0.897529   0.885141  0.909467  0.897127
+3        Random Forest  0.895930   0.912250  0.869822  0.892801
+2  Decision Tree (J48)  0.851744   0.859879  0.832840  0.851223
+6          Extra Trees  0.803198   0.920523  0.633432  0.760718
+4           AdaBoostM1  0.709448   0.900572  0.459172  0.608110
+
+
+10fold
+                Model  Accuracy  Precision    Recall  F1-Score
+5                  SVM  0.915116   0.912434  0.915089  0.913729
+1  Logistic Regression  0.907703   0.906967  0.905030  0.905956
+3        Random Forest  0.900000   0.919082  0.876627  0.897822
+0          Naive Bayes  0.898692   0.887052  0.909763  0.898226
+2  Decision Tree (J48)  0.859157   0.867874  0.842899  0.858250
+6          Extra Trees  0.796657   0.916123  0.624556  0.757400
+4           AdaBoostM1  0.685756   0.776563  0.666864  0.660339
+
